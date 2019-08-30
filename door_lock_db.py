@@ -6,7 +6,7 @@ import os
 import requests
 import json
 from base64 import b64encode, b64decode
-from PIL import Image
+# from PIL import Image
 
 # Explicitly providing path to '.env'
 env_path = Path('.') / '.env'
