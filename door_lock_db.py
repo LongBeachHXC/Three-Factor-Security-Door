@@ -55,9 +55,7 @@ class _DoorLockDB:
             url = f'{base_uri}{endpoint}'
 
         if query != None:
-            query_object = {}
-            query_object['name'] = query
-            payload = json.dumps(query_object)
+            payload = json.dumps(query)
             # print(query)
             url += f'?q={payload}'
         else:
@@ -102,6 +100,15 @@ class _DoorLockDB:
         response = requests.request("PATCH", url, data=payload, headers=headers)
         return response.json()
 
+    def get_image(self, endpoint, image_id):
+        if endpoint == 'm':
+            url = f'{media_uri}'
+        else:
+            url = f'{base_uri}{endpoint}'
+        url += f'/{image_id}'
+        response = requests.request('GET', url, headers)
+        return response
+    
     def upload_headshot_image(self, endpoint, binary_hex_json, headers=headers):
         binary_hex = json.loads(binary_hex_json)
         image_from_hex = bytes.fromhex(binary_hex)
