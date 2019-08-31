@@ -100,29 +100,30 @@ class _DoorLockDB:
         response = requests.request("PATCH", url, data=payload, headers=headers)
         return response.json()
 
-    def get_image(self, endpoint, image_id):
+    def get_image_url(self, endpoint, image_id):
         if endpoint == 'm':
             url = f'{media_uri}'
         else:
             url = f'{base_uri}{endpoint}'
         url += f'/{image_id}'
-        response = requests.request('GET', url, headers)
-        return response
+        # response = requests.request('GET', url, headers)
+        # image_bytes = BytesIO(response.content)
+        return url
     
-    def upload_headshot_image(self, endpoint, binary_hex_json, headers=headers):
-        binary_hex = json.loads(binary_hex_json)
-        image_from_hex = bytes.fromhex(binary_hex)
-        # img_decoded = b64decode(binary_str)
-        # img = Image.frombytes(img_decoded)
-        # binary_blob = img
-        if endpoint == 'm':
-            url = f'{media_uri}'
-        else:
-            url = f'{base_uri}{endpoint}'
+    # def upload_headshot_image(self, endpoint, binary_hex_json, headers=headers):
+    #     binary_hex = json.loads(binary_hex_json)
+    #     image_from_hex = bytes.fromhex(binary_hex)
+    #     # img_decoded = b64decode(binary_str)
+    #     # img = Image.frombytes(img_decoded)
+    #     # binary_blob = img
+    #     if endpoint == 'm':
+    #         url = f'{media_uri}'
+    #     else:
+    #         url = f'{base_uri}{endpoint}'
         
-        files = {'file': image_from_hex}
-        response = requests.request("POST", url, files=files, headers=headers)
-        return response.json()
+    #     files = {'file': image_from_hex}
+    #     response = requests.request("POST", url, files=files, headers=headers)
+    #     return response.json()
         
 # https://doorlock-be53.restdb.io/media/5d66dbd49ce4772e000063b9
 
