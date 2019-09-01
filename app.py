@@ -138,10 +138,10 @@ class Fullscreen_Window:
 								self.validUser.grid(columnspan=3)
 								self.image = PhotoImage(file='Professional Headshot (Cropped).gif')
 								self.photoLabel = ttk.Label(self.tk, image=self.image)
-								self.photoLabel.grid(columnspan=3)
+								self.photoLabel.grid(columnspan=3, sticky=W+E)
 								
 								self.enterPINlabel = ttk.Label(self.tk, text='Please enter your PIN:', font='size, 18', justify='center', anchor='center')
-								self.enterPINlabel.grid(columnspan=3)
+								self.enterPINlabel.grid(columnspan=3, sticky=W+E)
 								pin = ''
 								
 								keypad = [
@@ -236,7 +236,7 @@ class Fullscreen_Window:
 			if pin == userPin:
 				self.PINresultLabel = ttk.Label(self.tk, text="Thank You,\nAccess Granted")
 				self.PINresultLabel.config(font='size, 20', justify='center', anchor='center')
-				self.PINresultLabel.grid(columnspan=3, pady=210)
+				self.PINresultLabel.grid(columnspan=3, sticky=W+E, pady=210)
 				
 				self.PINresultLabel.grid_forget()
 				# self.smsDigitsLabel.grid_forget()
@@ -248,7 +248,7 @@ class Fullscreen_Window:
 				# self.PINresultLabel.grid_forget()
 				self.PINresultLabel = ttk.Label(self.tk, text="Incorrect PIN\nEntered!")
 				self.PINresultLabel.config(font='size, 20', justify='center', anchor='center')
-				self.PINresultLabel.grid(sticky=tk.W+tk.E, pady=210)
+				self.PINresultLabel.grid(sticky=W+E, pady=210)
 				self.PINenteredtimeout.start()
 				# self.smsDigitsLabel.grid_forget()
 				
