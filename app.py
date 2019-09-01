@@ -10,7 +10,7 @@ from evdev import InputDevice
 from select import select
 from door_lock_db import DoorLockDB
 from tkinter import *
-from tkinter.ttk import *
+from tkinter import ttk
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
