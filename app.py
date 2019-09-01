@@ -136,7 +136,7 @@ class Fullscreen_Window:
 								self.welcomeLabel.grid_forget()
 								self.validUser = ttk.Label(self.tk, text=f"Welcome\n {user_info['name']}!", font='size, 15', justify='center', anchor='center')
 								self.validUser.grid(columnspan=3, sticky=W+E)
-								self.image = PhotoImage(file='resize150.gif')
+								self.image = PhotoImage(file='img100x150.gif')
 								self.photoLabel = ttk.Label(self.tk, image=self.image, justify='center', anchor='center')
 								self.photoLabel.grid(columnspan=3, sticky=W+E)
 								
