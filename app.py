@@ -16,6 +16,8 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 GPIO.setup(5,GPIO.OUT)
 
+db = DoorLockDB()
+
 accessLogId = str()
 pin = str()
 
