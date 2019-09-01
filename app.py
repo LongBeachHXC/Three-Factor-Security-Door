@@ -162,9 +162,9 @@ class Fullscreen_Window:
 									# partial takes care of function and argument
 									#cmd = partial(click, label)
 									# create the button
-									self.btn[n] = Button(self.tk, text=label, font='size, 16', width=4, height=1, command=lambda digitPressed=label:self.codeInput(digitPressed, userPin))
+									self.btn[n] = Button(self.tk, text=label, font='size, 16', width=2, height=1, command=lambda digitPressed=label:self.codeInput(digitPressed, userPin))
 									# position the button
-									self.btn[n].grid(row=r, column=c, ipadx=5, ipady=5)
+									self.btn[n].grid(row=r, column=c, ipadx=0, ipady=0)
 									# increment button index
 									n += 1
 									# update row/column position
