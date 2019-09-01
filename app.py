@@ -135,7 +135,7 @@ class Fullscreen_Window:
 								userPin = user_info['pin']
 								self.welcomeLabel.grid_forget()
 								self.validUser = ttk.Label(self.tk, text=f"Welcome\n {user_info['name']}!", font='size, 15', justify='center', anchor='center')
-								self.validUser.grid(columnspan=3)
+								self.validUser.grid(columnspan=3, sticky=W+E+N+S)
 								self.image = PhotoImage(file='resize150.gif')
 								self.photoLabel = ttk.Label(self.tk, image=self.image)
 								self.photoLabel.grid(columnspan=3, sticky=W+E+N+S)
@@ -162,9 +162,9 @@ class Fullscreen_Window:
 									# partial takes care of function and argument
 									#cmd = partial(click, label)
 									# create the button
-									self.btn[n] = Button(self.tk, text=label, font='size, 18', width=4, height=1, command=lambda digitPressed=label:self.codeInput(digitPressed, userPin))
+									self.btn[n] = Button(self.tk, text=label, font='size, 16', width=4, height=1, command=lambda digitPressed=label:self.codeInput(digitPressed, userPin))
 									# position the button
-									self.btn[n].grid(row=r, column=c, ipadx=10, ipady=10)
+									self.btn[n].grid(row=r, column=c, ipadx=5, ipady=5)
 									# increment button index
 									n += 1
 									# update row/column position
