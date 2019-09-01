@@ -135,13 +135,13 @@ class Fullscreen_Window:
 								userPin = user_info['pin']
 								self.welcomeLabel.grid_forget()
 								self.validUser = ttk.Label(self.tk, text=f"Welcome\n {user_info['name']}!", font='size, 15', justify='center', anchor='center')
-								self.validUser.grid(columnspan=3, sticky=W+E+N+S)
+								self.validUser.grid(columnspan=3, sticky=W+E)
 								self.image = PhotoImage(file='resize150.gif')
 								self.photoLabel = ttk.Label(self.tk, image=self.image)
-								self.photoLabel.grid(columnspan=3, sticky=W+E+N+S)
+								self.photoLabel.grid(columnspan=3, sticky=W+E)
 								
 								self.enterPINlabel = ttk.Label(self.tk, text='Please enter your PIN:', font='size, 18', justify='center', anchor='center')
-								self.enterPINlabel.grid(columnspan=3, sticky=W+E+N+S)
+								self.enterPINlabel.grid(columnspan=3, sticky=W+E)
 								pin = ''
 								
 								keypad = [
