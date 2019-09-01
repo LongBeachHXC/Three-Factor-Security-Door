@@ -48,7 +48,7 @@ class Fullscreen_Window:
 	def show_idle(self):
 		self.welcomeLabel = ttk.Label(self.tk, text="Please Present\nYour Token")
 		self.welcomeLabel.config(font='size, 20', justify='center', anchor='center')
-		self.welcomeLabel.grid(pady=210)
+		self.welcomeLabel.grid(pady=150)
 	
 	def pin_entry_forget(self):
 		self.validUser.grid_forget()
@@ -115,7 +115,7 @@ class Fullscreen_Window:
 							rfid_user = self.db.get_to_db('alist', query=query)
 							
 							if len(rfid_user) != 1:
-								self.welcomeLabel.config(text="ACCESS DENIED")
+								self.welcomeLabel.config(text="ACCESS DENIED", justify='center', anchor='center')
 								
 								# Log access attempt
 								# cur.execute("INSERT INTO access_log SET rfid_presented = '%s', rfid_presented_datetime = NOW(), rfid_granted = 0" % (rfid_presented))
