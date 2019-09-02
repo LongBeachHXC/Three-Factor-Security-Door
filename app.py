@@ -48,7 +48,7 @@ class Fullscreen_Window:
 	def show_idle(self):
 		self.welcomeLabel = ttk.Label(self.tk, text="Please Present\nYour Token")
 		self.welcomeLabel.config(font='size, 20', justify='center', anchor='center')
-		self.welcomeLabel.grid(pady=150)
+		self.welcomeLabel.grid(pady=125)
 	
 	def pin_entry_forget(self):
 		self.validUser.grid_forget()
