@@ -1,0 +1,20 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[[source]]
+name = "piwheels"
+url = "https://www.piwheels.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+requests = "*"
+python-dotenv = "*"
+evdev = "*"
+rpi-gpio = "*"
+
+[requires]
+python_version = "3.7"

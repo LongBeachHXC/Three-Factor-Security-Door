@@ -14,7 +14,7 @@ from tkinter import ttk
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
-GPIO.setup(5,GPIO.OUT)
+GPIO.setup(13,GPIO.OUT)
 
 db = DoorLockDB()
 
@@ -29,6 +29,9 @@ class Fullscreen_Window:
 		self.frame = Frame(self.tk)
 		self.frame.grid()
 		self.tk.columnconfigure(0, weight=1)
+		self.tk.columnconfigure(1, weight=1)
+		self.tk.columnconfigure(2, weight=1)
+		self.tk.columnconfigure(3, weight=1)
 		
 		self.tk.attributes('-zoomed', True)
 		self.tk.attributes('-fullscreen', True)
@@ -48,7 +51,7 @@ class Fullscreen_Window:
 	def show_idle(self):
 		self.welcomeLabel = ttk.Label(self.tk, text="Please Present\nYour Token")
 		self.welcomeLabel.config(font='size, 20', justify='center', anchor='center')
-		self.welcomeLabel.grid(pady=125)
+		self.welcomeLabel.grid(columnspan=3, padx=125, pady=125)
 	
 	def pin_entry_forget(self):
 		self.validUser.grid_forget()
@@ -68,8 +71,10 @@ class Fullscreen_Window:
 		self.show_idle()
 		
 	def returnToIdle_fromAccessGranted(self):
-		GPIO.output(5,GPIO.LOW)
-		self.SMSresultLabel.grid_forget()
+		GPIO.output(13,GPIO.LOW)
+		# self.SMSresultLabel.grid_forget()
+		# self.returnToIdle_fromPINentered()
+		self.PINresultLabel.grid_forget()
 		self.show_idle()
 		
 	# def returnToIdle_fromSMSentry(self):
@@ -132,11 +137,11 @@ class Fullscreen_Window:
 								self.show_idle()
 							else:
 								user_info = rfid_user[0]
-								userPin = user_info['pin']
+								userPin = str(user_info['pin'])
 								self.welcomeLabel.grid_forget()
 								self.validUser = ttk.Label(self.tk, text=f"Welcome\n {user_info['name']}!", font='size, 15', justify='center', anchor='center')
 								self.validUser.grid(columnspan=3, sticky=W+E)
-								self.image = PhotoImage(file='img100x150.gif')
+								self.image = PhotoImage(file='image75.gif')
 								self.photoLabel = ttk.Label(self.tk, image=self.image, justify='center', anchor='center')
 								self.photoLabel.grid(columnspan=3, sticky=W+E)
 								
@@ -162,9 +167,9 @@ class Fullscreen_Window:
 									# partial takes care of function and argument
 									#cmd = partial(click, label)
 									# create the button
-									self.btn[n] = Button(self.tk, text=label, font='size, 16', width=4, height=0, command=lambda digitPressed=label:self.codeInput(digitPressed, userPin))
+									self.btn[n] = Button(self.tk, text=label, font='size, 16', width=1, height=0, command=lambda digitPressed=label:self.codeInput(digitPressed, userPin))
 									# position the button
-									self.btn[n].grid(row=r, column=c, ipadx=10, ipady=10)
+									self.btn[n].grid(row=r, column=c, padx=15, ipady=0)
 									# increment button index
 									n += 1
 									# update row/column position
@@ -233,12 +238,13 @@ class Fullscreen_Window:
 			except Exception as e:
 				print(e)
 
+			# print(f'This is the pin: {pin}')
+			# print(f'This is the db pin: {userPin}')
 			if pin == userPin:
 				self.PINresultLabel = ttk.Label(self.tk, text="Thank You,\nAccess Granted")
 				self.PINresultLabel.config(font='size, 20', justify='center', anchor='center')
-				self.PINresultLabel.grid(columnspan=3, sticky=W+E+N+S, pady=210)
+				self.PINresultLabel.grid(columnspan=3, sticky=W+E+N+S, pady=125)
 				
-				self.PINresultLabel.grid_forget()
 				# self.smsDigitsLabel.grid_forget()
 				GPIO.output(13,GPIO.HIGH)
 				
@@ -248,7 +254,7 @@ class Fullscreen_Window:
 				# self.PINresultLabel.grid_forget()
 				self.PINresultLabel = ttk.Label(self.tk, text="Incorrect PIN\nEntered!")
 				self.PINresultLabel.config(font='size, 20', justify='center', anchor='center')
-				self.PINresultLabel.grid(sticky=W+E+N+S, pady=210)
+				self.PINresultLabel.grid(columnspan=3, sticky=W+E+N+S, pady=125)
 				self.PINenteredtimeout.start()
 				# self.smsDigitsLabel.grid_forget()
 				
