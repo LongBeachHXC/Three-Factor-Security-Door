@@ -13,11 +13,11 @@ env_path = Path('.') / '.env'
 load_dotenv(dotenv_path=env_path)
 
 DB_API_KEY = os.getenv('DB_API_KEY')
+DB_BASE_URI = os.getenv('DB_BASE_URI')
 
-DB_BASE_URI = 'https://doorlock-be53.restdb.io'
 db_rest_uri = f'{DB_BASE_URI}/rest'
 db_media_uri = f'{DB_BASE_URI}/media'
-ACCESS_LIST_COLLECTION = '/accesslist'
+ACCESS_LIST_COLLECTION = '/userdb'
 ACCESS_LOG_COLLECTION = '/accesslog'
 
 base_uri = db_rest_uri
