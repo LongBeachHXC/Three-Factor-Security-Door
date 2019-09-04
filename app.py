@@ -135,6 +135,7 @@ class Fullscreen_Window:
 								self.welcomeLabel.grid_forget()
 								self.show_idle()
 							else:
+								print(rfid_user)
 								user_info = rfid_user[0]
 								userPin = str(user_info['pin'])
 								self.welcomeLabel.grid_forget()
