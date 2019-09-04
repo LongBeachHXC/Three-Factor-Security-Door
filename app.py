@@ -18,7 +18,7 @@ GPIO.setup(13,GPIO.OUT)
 
 db = DoorLockDB()
 
-accessLogId = str()
+access_log_id = str()
 pin = str()
 
 class Fullscreen_Window:
@@ -102,7 +102,7 @@ class Fullscreen_Window:
 		
 	def listen_rfid(self):
 		global pin
-		global accessLogId
+		global access_log_id
 		
 		keys = "X^1234567890XXXXqwertzuiopXXXXasdfghjklXXXXXyxcvbnmXXXXXXXXXXXXXXXXXXXXXXX"
 		dev = InputDevice('/dev/input/event0')
@@ -131,7 +131,6 @@ class Fullscreen_Window:
 									'rfid_presented_datetime' : f'{localtime}',
 									'rfid_granted' : 0
 								}
-								db.post_new_doc('alog', payload)
 								time.sleep(3)
 								self.welcomeLabel.grid_forget()
 								self.show_idle()
@@ -189,8 +188,8 @@ class Fullscreen_Window:
 									'rfid_granted' : 1
 								}
 								try:
-									access_log_entry = db.post_new_doc('alog', payload)
-									accessLogId = access_log_entry['access_id']
+									rfid_log = db.post_new_doc('alog', payload)
+									access_log_id = rfid_log['_id']
 								except Exception as e:
 									print(e)
 							
@@ -206,7 +205,7 @@ class Fullscreen_Window:
 							print(rfid_presented)
 
 	def codeInput(self, value, userPin):
-		global accessLogId
+		global access_log_id
 		global pin
 		pin += value
 		pinLength = len(pin)
@@ -234,7 +233,7 @@ class Fullscreen_Window:
 				'pin_granted' : f'{pin_granted}'
 			}
 			try:
-				db.post_new_doc('alog', payload)
+				doc = db.update_doc('alog', access_log_id, payload)
 			except Exception as e:
 				print(e)
 
