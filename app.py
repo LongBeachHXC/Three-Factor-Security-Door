@@ -39,8 +39,6 @@ class Fullscreen_Window:
 		self.tk.bind("<F11>", self.toggle_fullscreen)
 		self.tk.bind("<Escape>", self.end_fullscreen)
 		self.tk.config(cursor="none")
-
-		self.db = DoorLockDB()
 		
 		self.show_idle()
 		
@@ -167,7 +165,7 @@ class Fullscreen_Window:
 									# partial takes care of function and argument
 									#cmd = partial(click, label)
 									# create the button
-									self.btn[n] = Button(self.tk, text=label, font='size, 16', width=1, height=0, command=lambda digitPressed=label:self.codeInput(digitPressed, userPin))
+									self.btn[n] = Button(self.tk, text=label, font='size, 16', width=4, height=1, command=lambda digitPressed=label:self.codeInput(digitPressed, userPin))
 									# position the button
 									self.btn[n].grid(row=r, column=c, padx=15, ipady=0)
 									# increment button index
