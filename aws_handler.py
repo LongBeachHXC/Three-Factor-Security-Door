@@ -1,6 +1,7 @@
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+import requests
 import boto3
 from botocore.exceptions import ClientError
 
@@ -21,18 +22,19 @@ class AwsHandler():
         return response
 
     def listRekCollection(self, maxResults):
+        data_holder = []
         response=self.rek_client.list_collections(MaxResults=maxResults)
         while True:
             collections = response['CollectionIds']
             
             for collection in collections:
-                return collection
+                data_holder.append(collection)
             if 'NextToken' in response:
                 nextToken = response['NextToken']
                 response=self.rek_client.list_collections(NextToken=nextToken,MaxResults=maxResults)
             
             else:
-                break
+                return(data_holder)
 
     def describeRekCollection(self, collectionId):
         collection_obj = {}
@@ -66,10 +68,58 @@ class AwsHandler():
                 response = f'Error other than Not Found occured {error_response}'
             statusCode = e.response['ResponseMetadata']['HTTPStatusCode']
             return(response, statusCode)
-        
+    
+    def addFaceToCollection(self, collectionId, image_url, externalImageId, maxFaces=1, qualityFilter='AUTO', detectionAttributes = ['ALL']):
+        '''
+        Function to add images to a collection. Input parameters are as follows:
+            {
+                'collectionId': 'string',
+                'image_url': 'string',
+                'externalImageId': 'string',
+                'maxFaces': int,
+                'qualityFilter': 'string',
+                'detectionAttributes': 'string'
+            }
+        '''
+        image = requests.request('GET', image_url)
+        image_bytes = image.content
+        response = self.rek_client.index_faces(
+            CollectionId=collectionId, 
+            Image={'Bytes': image_bytes}, 
+            ExternalImageId=externalImageId, 
+            MaxFaces=maxFaces, 
+            QualityFilter=qualityFilter, 
+            DetectionAttributes=detectionAttributes
+        )
+        return(response)
 
-CreateCollection
-IndexFaces(SpecifyCollection)
-# Allows to search streaming video
-CreateStreamProcessor
+    def listFacesInCollection(self, collectionId, maxResults=10):
+        data_holder = []
+        tokens = True
+        response = self.rek_client.list_faces(CollectionId=collectionId, MaxResults=maxResults)
+        while tokens:
+            faces = response['Faces']
+            for face in faces:
+                data_holder.append(face)
+            if 'NextToken' in response:
+                nextToken = response['NextToken']
+                response = self.rek_client.list_faces(CollectionId=collectionId, NextToken=nextToken, MaxResults=maxResults)
+                data_holder.append(response)
+            else:
+                tokens = False
+        return(data_holder)
+
+    def deleteFacesInCollection(self, collectionId, faceIds):
+        data_holder = []
+        response = self.rek_client.delete_faces(CollectionId=collectionId, FaceIds=faceIds)
+        deleted_faces = response['DeletedFaces']
+        deleted_faces_string = f'Deleted {str(len(deleted_faces))} from {collectionId}'
+        for faceId in response['DeletedFaces']:
+            data_holder.append(faceId)
+        return(deleted_faces_string, data_holder)
+
+# CreateCollection
+# IndexFaces(SpecifyCollection)
+# # Allows to search streaming video
+# CreateStreamProcessor
 
